@@ -27,18 +27,15 @@ class CircularQueue{
         return this.curerntLength;
     }
     enqueue(element){
-        if(this.isEmpty()){
-            this.head = 0;
-            this.tail = 0;
-            this.items[0]  = element;
-            
-        }else if (this.isFull()){
+       if(this.isFull()){
             console.log("this Queue is full ")
             return null
         }else{
             this.tail = (this.tail + 1)%this.capacity;
             this.items[this.tail] = element;
-
+            if(this.head === -1){
+                this.head = this.tail;
+            }
         }
 
         this.curerntLength++;
@@ -49,16 +46,17 @@ class CircularQueue{
         if(this.isEmpty()){
             console.log("this Queue is empty ");
             return null;
-        }else if (this.head === this.tail){
-            this.items[this.head] = null;
-            this.head = -1
-            this.tail = -1
+       
         }else{
             this.items[this.head] = null;
             this.head = (this.head + 1)%this.capacity 
 
         }
-        this.capacity--;
+        this.curerntLength--;
+        if(this.isEmpty()){
+            this.head = -1;
+            this.tail = -1;
+        }
         console.log("After dequeue = " ,this.items);
         
     
@@ -69,8 +67,12 @@ class CircularQueue{
             return
         }else{
             let output = '';
-            for(const num of this.items){
-                output += `${num} `
+            let i = 0 ;
+            let j = this.head;
+            while(i < this.curerntLength){
+                output += `${this.items[j]} `
+                j = (j + 1 )%this.capacity;
+                i++;
             }
             console.log('the Queue = ' ,output);
             
