@@ -36,6 +36,7 @@ class QueueArray{
         console.log("queue =",output)
         return output;
     }
+    
 }
 
 const queue  = new QueueArray;
@@ -46,4 +47,17 @@ queue.enqueue(4)
 queue.enqueue(5)
 queue.dequeue();
 queue.peak();
+queue.print()
+
+function reverse(queue){
+    if(queue.items.length < 1){
+        console.log("empty queue");
+     return;   
+    }
+    let element = queue.items.shift();
+    reverse(queue);
+    queue.items.push(element);
+    
+}
+reverse(queue);
 queue.print()
